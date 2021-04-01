@@ -6,7 +6,7 @@ uniform vec4 modulate_color : hint_color = vec4(1.0);
 uniform sampler2D albedoTex : hint_albedo;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
-uniform int color_depth = 15;
+uniform int modulate_color_depth = 15;
 uniform bool dither_enabled = true;
 uniform bool fog_enabled = true;
 uniform vec4 fog_color : hint_color = vec4(0.5, 0.7, 1.0, 1.0);
@@ -83,17 +83,20 @@ float get_dither_brightness(vec3 albedo, vec4 fragcoord)
 }
 
 // https://stackoverflow.com/a/42470600
-vec3 band_color(vec3 _color, int num_of_colors)
+vec4 band_color(vec4 _color, int num_of_colors)
 {
-	vec3 num_of_colors_vec = vec3(float(num_of_colors));
+	vec4 num_of_colors_vec = vec4(float(num_of_colors));
 	return floor(_color * num_of_colors_vec) / num_of_colors_vec;
 }
 
 void fragment()
 {
+	vec4 tex = texture(albedoTex, UV) * modulate_color;
 	ALBEDO = COLOR.rgb;
-	ALBEDO *= (texture(albedoTex, UV) * modulate_color).rgb;
+	ALBEDO *= tex.rgb;
 	ALBEDO = fog_enabled ? mix(ALBEDO, fog_color.rgb, fog_weight) : ALBEDO;
 	ALBEDO = dither_enabled ? ALBEDO * get_dither_brightness(ALBEDO, FRAGCOORD) : ALBEDO;
-	ALBEDO = band_color(ALBEDO, color_depth);
+	vec4 banded_tex = band_color(vec4(ALBEDO, tex.a), modulate_color_depth);
+	ALBEDO = banded_tex.rgb;
+	ALPHA = banded_tex.a;
 }
