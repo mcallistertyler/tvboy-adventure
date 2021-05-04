@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://dialog/DialogBox.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DialogBox" type="ColorRect" parent="."]
+margin_left = 41.0
+margin_top = 367.0
+margin_right = 731.0
+margin_bottom = 563.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+dialogPath = "res://dialog/dialog0.json"
+
+[node name="Name" type="RichTextLabel" parent="DialogBox"]
+margin_left = 10.0
+margin_top = 8.0
+margin_right = 143.0
+margin_bottom = 61.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="DialogBox"]
+margin_left = 23.0
+margin_top = 62.0
+margin_right = 612.0
+margin_bottom = 172.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Indicator" type="Polygon2D" parent="DialogBox"]
+visible = false
+
+[node name="Timer" type="Timer" parent="DialogBox"]
+one_shot = true

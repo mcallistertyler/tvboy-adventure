@@ -1,6 +1,8 @@
 extends KinematicBody
 
-export var speed : float = 20
+export var default_speed : float = 20
+export var run_speed : float = 35
+export var speed : float = default_speed
 export var acceleration : float = 15 # rate of reaching max speed
 export var angular_acceleration : float = 20
 export var air_acceleration : float = 5 # controls how you move when in the air, adds less control in the air
@@ -11,8 +13,10 @@ export var wall_jump_power : float = 20
 
 export var wall_slide_acceleration = 1
 export var max_wall_slide_speed = 1
+
 var wall_sliding = false
 var can_jump = false
+var is_talking = false
 
 export(float, 0.1, 1) var mouse_sensitivity : float = 0.3 # mouse sensitivity for left right up and down
 export(float, -90, 0) var min_pitch : float = -90 # max and min pitch of the camera
@@ -21,19 +25,20 @@ export(float, 0, 90) var max_pitch : float = 90
 var velocity : Vector3
 var y_velocity : float
 
-#onready var camera_pivot = $CameraPivot
-#onready var camera = $CameraPivot/CameraBoom/Camera
 onready var camera = get_node("Camera")
 onready var camera_pivot = get_node("CameraPivot")
 onready var anim = get_node("AnimationPlayer")
 onready var character = get_node(".")
+onready var dust = get_node("Dust")
+onready var interaction_area = get_node("InteractionArea")
+var dialogScene = preload("res://dialog/Dialog.tscn")
+
 func _ready():
 	# capture mouse and lock it to the window
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
-func _process(delta):
+func _process(_delta):
 	#runs every frame
-	
 	if Input.is_action_just_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
@@ -45,36 +50,67 @@ func set_anim(dir):
 func _on_touched_wall(body):
 	if body is StaticBody:
 		print("is static body")
-		#queue_free()
+
+func talk_to_npc():
+	if !interaction_area.get_overlapping_areas().empty():
+		is_talking = true
+		var initial_area = interaction_area.get_overlapping_areas()[0]
+		var npc_name = initial_area.get_parent().get_name()
+		var dialogBox = dialogScene.instance()
+		var dialogNode = dialogBox.get_node("DialogBox")
+		add_child(dialogBox)
+		dialogBox.get_node("DialogBox").supply_talking(npc_name)
+
+func handle_dust(delta):
+	var char_rot = $Armature.get_rotation()
+	dust.rotate_y(char_rot.y)
 
 func handle_movement(delta):
 	var direction = Vector3()
 	var inputMoveVector = Vector2()
 	var cam_global_position = camera.get_global_transform().basis
 	var is_moving = false
+
+	#dust.transform(cam_global_position.y)
 	# transform.basis gives current direction of the player
+	if Input.is_action_pressed("hold_run"):
+		speed = run_speed
+	else:
+		dust.visible = false
+		speed = default_speed
 	if Input.is_action_pressed("move_forward"):
 		inputMoveVector.y += 1
 		is_moving = true
 		if is_on_floor():
 			anim.play("Run")
+			if speed == run_speed:
+				dust.visible = true
 	if Input.is_action_pressed("move_backward"):
 		inputMoveVector.y -= 1
 		is_moving = true
 		if is_on_floor():
 			anim.play_backwards("Run")
+			if speed == run_speed:
+				dust.visible = true
 	if Input.is_action_pressed("move_left"):
-		if not wall_sliding:
-			inputMoveVector.x -= 1
-			is_moving = true
+		inputMoveVector.x -= 1
+		is_moving = true
 		if is_on_floor():
 			anim.play("Run")
+			if speed == run_speed:
+				dust.visible = true
 	if Input.is_action_pressed("move_right"):
-		if not wall_sliding:
-			inputMoveVector.x +=1
-			is_moving = true
+		inputMoveVector.x +=1
+		is_moving = true
 		if is_on_floor():
 			anim.play("Run")
+			if speed == run_speed:
+				dust.visible = true
+	if !is_on_floor():
+		dust.visible = false
+	if Input.is_action_just_pressed("talk"):
+		talk_to_npc()
+		
 	inputMoveVector = inputMoveVector.normalized()
 	direction += -cam_global_position.z * inputMoveVector.y
 	direction += cam_global_position.x * inputMoveVector.x
@@ -89,21 +125,6 @@ func handle_movement(delta):
 	
 	y_velocity = clamp(y_velocity - gravity, -max_terminal_velocity, max_terminal_velocity)
 	
-	#if is_on_wall() and !is_on_floor() and Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_backward"):
-		#print("Wall sliding conditions met.")
-		# slow down tv so it scrapes down the wall
-		# lock movement, only allow to jump
-		# jump off at a defined angle that still locks movement, e.g. dont allow immediate movement after performing wall jump
-		#print(direction)
-	#	wall_sliding = true
-	#	if velocity.y >= 0:
-	#		velocity.y = min(velocity.y + wall_slide_acceleration, max_wall_slide_speed)
-	#else:
-	#	wall_sliding = false
-	#for i in get_slide_count():
-	#	var collision = get_slide_collision(i)
-	#	print("Collided with: ", collision.collider.name)
-	
 	if Input.is_action_just_pressed("jump") and (is_on_floor() or wall_sliding):
 		y_velocity = jump_power
 		if wall_sliding && Input.is_action_just_pressed("jump"):
@@ -116,10 +137,14 @@ func handle_movement(delta):
 	if is_moving and is_on_floor() and not is_on_wall():
 		var angle = atan2(velocity.x, velocity.z)
 		var char_rot = $Armature.get_rotation()
-		print('angle', angle)
 		char_rot.y = angle
+		var dust_rot = dust.get_rotation()
+		dust_rot.y = angle
 		$Armature.set_rotation(char_rot)
-
+		dust.set_rotation(dust_rot)
 
 func _physics_process(delta):
 	handle_movement(delta)
+	
+func _dialog_listener():
+	print("Dialog listener")
