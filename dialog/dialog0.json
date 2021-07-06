@@ -1,4 +1,5 @@
 [
-    {"Name": "TV Dude #2", "Text": "Eyyyyyy I'm a TV that's fucked up. My creator was too lazy to make a new model to test this :/"},
-    {"Name": "TV Dude #3", "Text": "I don't say much. Especially after the incident."}
+    {"Name": "TV Dude #2", "Text": "My creator was too lazy to make a new model to test dialog :("},
+    {"Name": "TV Dude #3", "Text": "I don't say much. Especially after the incident."},
+    {"Name": "Debug Sign", "Text": "Hey! You're in the debug room.\nThings you can do in the debug room:\n 1. Walk around.\n 2. Jump.\n 3. That's it!"}
 ]

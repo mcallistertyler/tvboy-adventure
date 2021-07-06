@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/wooden sign.obj-55d077f85452cd9377814eecad83e66f.mesh"
+
+[deps]
+
+files=[ "res://.import/wooden sign.obj-55d077f85452cd9377814eecad83e66f.mesh" ]
+
+source_file="res://models/buildings/wooden sign.obj"
+dest_files=[ "res://.import/wooden sign.obj-55d077f85452cd9377814eecad83e66f.mesh", "res://.import/wooden sign.obj-55d077f85452cd9377814eecad83e66f.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

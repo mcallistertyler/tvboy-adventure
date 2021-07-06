@@ -2,9 +2,9 @@
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://shaders/PS1-shaders-for-godot/psx.shader" type="Shader" id=2]
-[ext_resource path="res://new_player/tex-material2.tres" type="Texture" id=3]
+[ext_resource path="res://NPCs/tex-material2.tres" type="Texture" id=3]
 [ext_resource path="res://assets/maujoe.camera_control/scripts/camera_control.gd" type="Script" id=4]
-[ext_resource path="res://new_player/tex-material1.tres" type="Texture" id=5]
+[ext_resource path="res://NPCs/tex-material1.tres" type="Texture" id=5]
 [ext_resource path="res://textures/sparkle.png" type="Texture" id=6]
 
 [sub_resource type="BoxShape" id=1]
@@ -294,11 +294,12 @@ far = 300.0
 script = ExtResource( 4 )
 privot = NodePath("../Armature/Skeleton/Cube")
 distance = 11.0
-collisions = false
+pitch_limit = 65
 
 [node name="Dust" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.146071, -1.07618, -3.39478 )
 cast_shadow = 0
+emitting = false
 amount = 7
 speed_scale = 3.5
 explosiveness = 0.15

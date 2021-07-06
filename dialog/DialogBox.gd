@@ -12,8 +12,9 @@ func _ready():
 
 func supply_talking(npc_name):
 	$Timer.wait_time = textSpeed
+	print(npc_name)
 	dialog = getDialog(npc_name)
-	assert(dialog, "Dialog not found")
+	#assert(dialog, "Dialog not found")
 	nextPhrase()
 
 	
@@ -40,6 +41,7 @@ func getDialog(npc_name) -> Array:
 			parsed_output.append(x)
 	if len(parsed_output) == 0:
 		print("No dialog found for ", npc_name)
+		return []
 	if typeof(parsed_output) == TYPE_ARRAY:
 		return parsed_output
 	else:

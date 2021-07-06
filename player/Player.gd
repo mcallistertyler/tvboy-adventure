@@ -31,7 +31,7 @@ onready var anim = get_node("AnimationPlayer")
 onready var character = get_node(".")
 onready var dust = get_node("Dust")
 onready var interaction_area = get_node("InteractionArea")
-var dialogScene = preload("res://dialog/Dialog.tscn")
+
 
 func _ready():
 	# capture mouse and lock it to the window
@@ -51,15 +51,16 @@ func _on_touched_wall(body):
 	if body is StaticBody:
 		print("is static body")
 
-func talk_to_npc():
-	if !interaction_area.get_overlapping_areas().empty():
-		is_talking = true
-		var initial_area = interaction_area.get_overlapping_areas()[0]
-		var npc_name = initial_area.get_parent().get_name()
-		var dialogBox = dialogScene.instance()
-		var dialogNode = dialogBox.get_node("DialogBox")
-		add_child(dialogBox)
-		dialogBox.get_node("DialogBox").supply_talking(npc_name)
+#func talk_to_npc():
+#	if !interaction_area.get_overlapping_areas().empty():
+#		is_talking = true
+#		var initial_area = interaction_area.get_overlapping_areas()[0]
+#		print("initial arera:", initial_area)
+#		var npc_name = initial_area.get_parent().get_name()
+#		var dialogBox = dialogScene.instance()
+#		var dialogNode = dialogBox.get_node("DialogBox")
+#		add_child(dialogBox)
+#		dialogBox.get_node("DialogBox").supply_talking(npc_name)
 
 func handle_dust(delta):
 	var char_rot = $Armature.get_rotation()
@@ -109,7 +110,8 @@ func handle_movement(delta):
 	if !is_on_floor():
 		dust.visible = false
 	if Input.is_action_just_pressed("talk"):
-		talk_to_npc()
+		pass
+		#talk_to_npc()
 		
 	inputMoveVector = inputMoveVector.normalized()
 	direction += -cam_global_position.z * inputMoveVector.y

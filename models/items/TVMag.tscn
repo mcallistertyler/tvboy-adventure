@@ -1,0 +1,56 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://shaders/psx_unlit_alpha-scissor.shader" type="Shader" id=1]
+[ext_resource path="res://textures/tvbook.png" type="Texture" id=2]
+[ext_resource path="res://textures/sparkle.png" type="Texture" id=3]
+[ext_resource path="res://scenes/floatmag.gd" type="Script" id=4]
+[ext_resource path="res://shaders/PS1-shaders-for-godot/psx.shader" type="Shader" id=5]
+
+[sub_resource type="CubeMesh" id=1]
+subdivide_width = 2
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 5 )
+shader_param/snapRes = 8.0
+shader_param/roughness = 1.0
+shader_param/specular = 0.1
+shader_param/uv_scale = Vector2( 1.5, 1.5 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/light_intensity = 0.3
+shader_param/transparent = false
+shader_param/albedoTex = ExtResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 3.0
+initial_velocity_random = 0.3
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = ExtResource( 1 )
+shader_param/precision_multiplier = 2.0
+shader_param/modulate_color = Color( 1, 1, 1, 1 )
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/billboard = true
+shader_param/y_billboard = false
+shader_param/color_depth = 15
+shader_param/alpha_scissor = 0.1
+shader_param/albedoTex = ExtResource( 3 )
+
+[sub_resource type="QuadMesh" id=5]
+material = SubResource( 4 )
+size = Vector2( 0.3, 0.3 )
+
+[node name="MeshInstance4" type="MeshInstance"]
+transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 58.3128, 3.21132, 55.705 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+script = ExtResource( 4 )
+
+[node name="Particles" type="Particles" parent="."]
+visibility_aabb = AABB( -1.6867, -1.28354, -4, 3.3734, 2.56707, 8 )
+process_material = SubResource( 3 )
+draw_pass_1 = SubResource( 5 )
+
+[node name="Area" type="Area" parent="."]
