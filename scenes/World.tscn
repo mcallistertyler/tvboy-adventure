@@ -1,34 +1,35 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://textures/tvbook.png" type="Texture" id=2]
-[ext_resource path="res://shaders/psx_unlit_alpha-scissor.shader" type="Shader" id=3]
+[ext_resource path="res://models/buildings/sign.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/NPC1.gd" type="Script" id=3]
 [ext_resource path="res://shaders/PS1-shaders-for-godot/psx.shader" type="Shader" id=4]
 [ext_resource path="res://textures/floor.png" type="Texture" id=5]
 [ext_resource path="res://2508135.jpg" type="Texture" id=6]
-[ext_resource path="res://textures/sparkle.png" type="Texture" id=7]
-[ext_resource path="res://scenes/floatmag.gd" type="Script" id=8]
-[ext_resource path="res://models/buildings/skyscraper.tscn" type="PackedScene" id=9]
-[ext_resource path="res://models/buildings/lamp.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/NPCArea.gd" type="Script" id=7]
+[ext_resource path="res://models/buildings/skyscraper-improved.tscn" type="PackedScene" id=11]
 
-[sub_resource type="PanoramaSky" id=1]
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 2.65024, 2.89675, 1 )
+
+[sub_resource type="PanoramaSky" id=2]
 panorama = ExtResource( 6 )
 
-[sub_resource type="Environment" id=2]
+[sub_resource type="Environment" id=3]
 background_mode = 2
-background_sky = SubResource( 1 )
+background_sky = SubResource( 2 )
 background_color = Color( 0.447059, 0.117647, 0.117647, 1 )
 background_energy = 0.5
 ambient_light_color = Color( 1, 1, 1, 1 )
 ambient_light_energy = 0.5
 ambient_light_sky_contribution = 0.5
 
-[sub_resource type="PlaneMesh" id=3]
+[sub_resource type="PlaneMesh" id=4]
 size = Vector2( 40, 40 )
 subdivide_width = 25
 subdivide_depth = 25
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 4 )
 shader_param/snapRes = 4.0
 shader_param/roughness = 1.0
@@ -39,44 +40,11 @@ shader_param/light_intensity = 0.3
 shader_param/transparent = false
 shader_param/albedoTex = ExtResource( 5 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=6]
 extents = Vector3( 0.0468315, 1, 0.0517595 )
 
-[sub_resource type="CubeMesh" id=6]
-subdivide_width = 2
-
-[sub_resource type="ShaderMaterial" id=7]
-shader = ExtResource( 4 )
-shader_param/snapRes = 8.0
-shader_param/roughness = 1.0
-shader_param/specular = 0.1
-shader_param/uv_scale = Vector2( 1.5, 1.5 )
-shader_param/uv_offset = Vector2( 0, 0 )
-shader_param/light_intensity = 0.3
-shader_param/transparent = false
-shader_param/albedoTex = ExtResource( 2 )
-
-[sub_resource type="ParticlesMaterial" id=8]
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 3.0
-initial_velocity_random = 0.3
-
-[sub_resource type="ShaderMaterial" id=9]
-shader = ExtResource( 3 )
-shader_param/precision_multiplier = 2.0
-shader_param/modulate_color = Color( 1, 1, 1, 1 )
-shader_param/uv_scale = Vector2( 1, 1 )
-shader_param/uv_offset = Vector2( 0, 0 )
-shader_param/billboard = true
-shader_param/y_billboard = false
-shader_param/color_depth = 15
-shader_param/alpha_scissor = 0.1
-shader_param/albedoTex = ExtResource( 7 )
-
-[sub_resource type="QuadMesh" id=10]
-material = SubResource( 9 )
-size = Vector2( 0.3, 0.3 )
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 19.2893, 1, 19.7591 )
 
 [node name="World" type="Spatial"]
 
@@ -87,63 +55,155 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3403, 0.788118, -13.6658 )
 "NPC",
 ] instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28.0434, -0.326956, -13.6658 )
-script = null
+script = ExtResource( 3 )
+
+[node name="Area" type="Area" parent="TV Dude #2"]
+script = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="TV Dude #2/Area"]
+shape = SubResource( 1 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+environment = SubResource( 3 )
 
 [node name="Floor" type="MeshInstance" parent="."]
 transform = Transform( 5.13214, 0, 0, 0, 1, 0, 0, 0, 6.37977, 1.71399, -1.70224, 3.23276 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
 
 [node name="StaticBody" type="StaticBody" parent="Floor"]
 transform = Transform( 431.031, 0, 0, 0, 1, 0, 0, 0, 391.273, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Floor/StaticBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.993, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 10.6818, 3.21132, -2.98059 )
-mesh = SubResource( 6 )
-material/0 = SubResource( 7 )
-script = ExtResource( 8 )
+[node name="Area" type="Area" parent="Floor/StaticBody"]
+transform = Transform( 0.00232002, 0, 0, 0, 1, 0, 0, 0, 0.00255576, 0, 0, 0 )
+space_override = 1
 
-[node name="Particles" type="Particles" parent="MeshInstance2"]
-visibility_aabb = AABB( -1.6867, -1.28354, -4, 3.3734, 2.56707, 8 )
-process_material = SubResource( 8 )
-draw_pass_1 = SubResource( 10 )
+[node name="CollisionShape" type="CollisionShape" parent="Floor/StaticBody/Area"]
+shape = SubResource( 7 )
 
-[node name="Skyscraper" parent="." instance=ExtResource( 9 )]
-transform = Transform( 29.2738, 0, 0, 0, 5.94658, 0, 0, 0, 26.5054, 152.903, 4.2744, 38.6532 )
+[node name="skyscraper-3" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 133.654, 0, -83.0856 )
 
-[node name="Skyscraper4" parent="." instance=ExtResource( 9 )]
-transform = Transform( 29.2738, 0, 0, 0, 5.94658, 0, 0, 0, 26.5054, 152.903, 24.2209, -19.5839 )
+[node name="skyscraper-36" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 133.654, 0, -117.95 )
 
-[node name="Skyscraper2" parent="." instance=ExtResource( 9 )]
-transform = Transform( 29.2738, 0, 0, 0, 5.94658, 0, 0, 0, 26.5054, 152.903, 33.9721, 102.198 )
+[node name="skyscraper-4" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 132.576, 0, -25.4433 )
 
-[node name="Skyscraper3" parent="." instance=ExtResource( 9 )]
-transform = Transform( 29.2738, 0, 0, 0, 5.94658, 0, 0, 0, 26.5054, 152.903, 33.9721, 161.435 )
+[node name="skyscraper-6" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 132.576, 42.633, 97.2274 )
 
-[node name="Skyscraper5" parent="." instance=ExtResource( 9 )]
-transform = Transform( 29.2738, 0, 0, 0, 5.94658, 0, 0, 0, 26.5054, 17.8604, -14.3902, 161.435 )
+[node name="skyscraper-7" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 98.2687, 31.898, 154.094 )
 
-[node name="Skyscraper6" parent="." instance=ExtResource( 9 )]
-transform = Transform( 29.2738, 0, 0, 0, 5.94658, 0, 0, 0, 26.5054, -63.4903, 25.4954, 156.542 )
+[node name="skyscraper-8" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 43.5055, 31.898, 154.444 )
 
-[node name="Skyscraper7" parent="." instance=ExtResource( 9 )]
-transform = Transform( 29.2738, 0, 0, 0, 5.94658, 0, 0, 0, 26.5054, 84.4891, 25.4954, 156.542 )
+[node name="skyscraper-9" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.42907, 31.898, 154.195 )
 
-[node name="StreetLamp1_Short" parent="." instance=ExtResource( 10 )]
-transform = Transform( 0.0367401, 0, 0, 0, 0, -0.0329678, 0, 0.0301409, 0, 6.8238, -2.07206, -25.5091 )
+[node name="skyscraper-10" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -61.9496, -14.7857, 154.765 )
 
-[node name="StreetLamp1_Short2" parent="." instance=ExtResource( 10 )]
-transform = Transform( 0.0367401, 0, 0, 0, 0, -0.0329678, 0, 0.0301409, 0, -8.73397, -2.07206, 0 )
+[node name="skyscraper-39" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -98.9085, -14.7857, 159.911 )
 
-[node name="StreetLamp1_Short3" parent="." instance=ExtResource( 10 )]
-transform = Transform( -0.0366288, 0.00234489, 0, 0, 0, -0.0329678, -0.0028583, -0.0300495, 0, -8.73397, -2.07206, 56.3501 )
+[node name="skyscraper-11" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -125.721, -14.7857, 86.9503 )
 
-[node name="StreetLamp1_Short4" parent="." instance=ExtResource( 10 )]
-transform = Transform( -0.0366288, 0.00234489, 0, 0, 0, -0.0329678, -0.0028583, -0.0300495, 0, -0.214826, -2.07206, 56.3501 )
+[node name="skyscraper-37" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -128.172, -14.7857, 112.23 )
+
+[node name="skyscraper-17" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -124.682, -14.7857, 31.1203 )
+
+[node name="skyscraper-33" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -187.796, 32.521, 31.1203 )
+
+[node name="skyscraper-34" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -187.796, 80.7533, 81.6875 )
+
+[node name="skyscraper-18" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -125.644, -14.7857, -21.5838 )
+
+[node name="skyscraper-32" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -191.735, 29.6969, -28.384 )
+
+[node name="skyscraper-19" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -127.64, -14.7857, -75.1582 )
+
+[node name="skyscraper-38" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -131.331, -14.7857, -124.316 )
+
+[node name="skyscraper-20" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -126.526, 14.1525, -146.082 )
+
+[node name="skyscraper-21" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -73.9256, -6.055, -151.641 )
+
+[node name="skyscraper-42" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -73.9256, 48.7299, -209.31 )
+
+[node name="skyscraper-22" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.4778, 18.876, -151.32 )
+
+[node name="skyscraper-23" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5314, 36.0939, -151.32 )
+
+[node name="skyscraper-40" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.21325, 36.0939, -196.143 )
+
+[node name="skyscraper-41" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 58.9791, 100.211, -196.143 )
+
+[node name="skyscraper-24" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 93.8953, 62.1188, -151.32 )
+
+[node name="skyscraper-25" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 149.861, 62.1188, -151.32 )
+
+[node name="skyscraper-27" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 149.861, 62.1188, -100.792 )
+
+[node name="skyscraper-28" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 198.658, 62.1188, -60.0854 )
+
+[node name="skyscraper-29" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 198.658, 62.1188, -6.16205 )
+
+[node name="skyscraper-30" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 198.658, 9.15323, 39.5192 )
+
+[node name="skyscraper-31" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 198.658, 75.3659, 96.2367 )
+
+[node name="skyscraper-26" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 149.861, 100.255, -207.965 )
+
+[node name="skyscraper-12" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -131.331, 19.7051, 153.323 )
+
+[node name="skyscraper-13" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -131.331, 45.7978, 209.5 )
+
+[node name="skyscraper-14" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -66.3318, 45.7978, 209.5 )
+
+[node name="skyscraper-15" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.096, 115.307, 209.5 )
+
+[node name="skyscraper-16" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 41.6502, 150.283, 209.5 )
+
+[node name="skyscraper-5" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 133.588, -31.2117, 39.8894 )
+
+[node name="skyscraper-35" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 133.588, -31.2117, 12.7463 )
+
+[node name="wooden_sign" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 1.77699, 0 )
