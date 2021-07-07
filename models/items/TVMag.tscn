@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://shaders/psx_unlit_alpha-scissor.shader" type="Shader" id=1]
 [ext_resource path="res://textures/tvbook.png" type="Texture" id=2]
@@ -42,11 +42,15 @@ shader_param/albedoTex = ExtResource( 3 )
 material = SubResource( 4 )
 size = Vector2( 0.3, 0.3 )
 
-[node name="MeshInstance4" type="MeshInstance"]
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 0.218182, 0.21961, 0.333887 )
+
+[node name="Zine" type="MeshInstance"]
 transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 58.3128, 3.21132, 55.705 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 script = ExtResource( 4 )
+shadow_path = NodePath(".")
 
 [node name="Particles" type="Particles" parent="."]
 visibility_aabb = AABB( -1.6867, -1.28354, -4, 3.3734, 2.56707, 8 )
@@ -54,3 +58,10 @@ process_material = SubResource( 3 )
 draw_pass_1 = SubResource( 5 )
 
 [node name="Area" type="Area" parent="."]
+transform = Transform( 6, 0, 0, 0, 6, 0, 0, 0, 3, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 6 )
+
+[connection signal="zineCollected" from="." to="." method="_on_Zine_zineCollected"]
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

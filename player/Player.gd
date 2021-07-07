@@ -47,21 +47,6 @@ func set_anim(dir):
 		anim.play("Idle")
 	pass
 
-func _on_touched_wall(body):
-	if body is StaticBody:
-		print("is static body")
-
-#func talk_to_npc():
-#	if !interaction_area.get_overlapping_areas().empty():
-#		is_talking = true
-#		var initial_area = interaction_area.get_overlapping_areas()[0]
-#		print("initial arera:", initial_area)
-#		var npc_name = initial_area.get_parent().get_name()
-#		var dialogBox = dialogScene.instance()
-#		var dialogNode = dialogBox.get_node("DialogBox")
-#		add_child(dialogBox)
-#		dialogBox.get_node("DialogBox").supply_talking(npc_name)
-
 func handle_dust(delta):
 	var char_rot = $Armature.get_rotation()
 	dust.rotate_y(char_rot.y)
@@ -72,8 +57,6 @@ func handle_movement(delta):
 	var cam_global_position = camera.get_global_transform().basis
 	var is_moving = false
 
-	#dust.transform(cam_global_position.y)
-	# transform.basis gives current direction of the player
 	if Input.is_action_pressed("hold_run"):
 		speed = run_speed
 	else:
@@ -111,7 +94,6 @@ func handle_movement(delta):
 		dust.visible = false
 	if Input.is_action_just_pressed("talk"):
 		pass
-		#talk_to_npc()
 		
 	inputMoveVector = inputMoveVector.normalized()
 	direction += -cam_global_position.z * inputMoveVector.y
@@ -147,6 +129,3 @@ func handle_movement(delta):
 
 func _physics_process(delta):
 	handle_movement(delta)
-	
-func _dialog_listener():
-	print("Dialog listener")

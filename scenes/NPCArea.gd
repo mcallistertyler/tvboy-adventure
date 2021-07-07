@@ -11,6 +11,7 @@ func _ready():
 func _input(event):
 	if get_node_or_null("DialogBox") == null:
 		if event.is_action_pressed("talk") and active:
+			print("active ", active)
 			var dialogBox = dialogScene.instance()
 			add_child(dialogBox)
 			dialogBox.get_node("DialogBox").supply_talking(npc_name)

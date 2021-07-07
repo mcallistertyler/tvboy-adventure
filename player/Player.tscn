@@ -294,6 +294,7 @@ far = 300.0
 script = ExtResource( 4 )
 privot = NodePath("../Armature/Skeleton/Cube")
 distance = 11.0
+collisions = false
 pitch_limit = 65
 
 [node name="Dust" type="Particles" parent="."]

@@ -10,6 +10,8 @@ var default_y: float = 0
 var custom_rotation = Vector3.ONE
 var shadow
 
+signal zineCollected
+
 onready var default_transform : Transform = get_transform()
 
 func _ready():
@@ -32,3 +34,15 @@ func _physics_process(delta):
 		if result.collider.name == "FloorBody":
 			var distance_from_ground = result.position - translation
 			shadow.update_shadow(translation, distance_from_ground.y)
+
+
+func _on_Area_body_entered(body):
+	if body.name == "Player":
+		## cool explosion should happen here also
+		emit_signal("zineCollected")
+		queue_free()
+
+
+func _on_Zine_zineCollected():
+	print("zine collected")
+	pass # Replace with function body.
