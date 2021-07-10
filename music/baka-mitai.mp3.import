@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/baka-mitai.mp3-a5a13c82ea51b5d6c290d3e77a7fc943.mp3str"
+
+[deps]
+
+source_file="res://music/baka-mitai.mp3"
+dest_files=[ "res://.import/baka-mitai.mp3-a5a13c82ea51b5d6c290d3e77a7fc943.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/woop.mp3-9e3e658a672c1da620d649502ebc2357.mp3str"
+
+[deps]
+
+source_file="res://sfx/woop.mp3"
+dest_files=[ "res://.import/woop.mp3-9e3e658a672c1da620d649502ebc2357.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

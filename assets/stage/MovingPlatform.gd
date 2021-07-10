@@ -4,9 +4,8 @@ export (float) var time = 5.0
 export (Vector3) var direction = Vector3(1,0,0)
 export (float) var speed = 1.5
 export (float) var delayTime = 1.5
-#export (float) var platformX = 1
-#export (float) var platformY = 1
-#export (float) var platformZ = 1
+export (bool) var playerAction = false
+export (float) var timedPlayerAction = 0.0
 
 var places = []
 

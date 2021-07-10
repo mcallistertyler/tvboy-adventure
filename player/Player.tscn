@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://shaders/PS1-shaders-for-godot/psx.shader" type="Shader" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/maujoe.camera_control/scripts/camera_control.gd" type="Script" id=4]
 [ext_resource path="res://NPCs/tex-material1.tres" type="Texture" id=5]
 [ext_resource path="res://textures/sparkle.png" type="Texture" id=6]
+[ext_resource path="res://sfx/footstep.mp3" type="AudioStream" id=7]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 1.62195, 1.03366, 1.97366 )
@@ -296,6 +297,7 @@ privot = NodePath("../Armature/Skeleton/Cube")
 distance = 11.0
 collisions = false
 pitch_limit = 65
+use_gui = false
 
 [node name="Dust" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.146071, -1.07618, -3.39478 )
@@ -315,3 +317,10 @@ draw_pass_2 = SubResource( 15 )
 
 [node name="CollisionShape" type="CollisionShape" parent="InteractionArea"]
 shape = SubResource( 16 )
+
+[node name="PlayerTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.5
+
+[node name="FootstepSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 7 )

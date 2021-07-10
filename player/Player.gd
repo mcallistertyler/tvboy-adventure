@@ -16,6 +16,7 @@ export var max_wall_slide_speed = 1
 
 var wall_sliding = false
 var can_jump = false
+var can_super_jump = false
 var is_talking = false
 
 export(float, 0.1, 1) var mouse_sensitivity : float = 0.3 # mouse sensitivity for left right up and down
@@ -31,12 +32,25 @@ onready var anim = get_node("AnimationPlayer")
 onready var character = get_node(".")
 onready var dust = get_node("Dust")
 onready var interaction_area = get_node("InteractionArea")
+onready var player_timer = get_node("PlayerTimer")
+onready var footstep_sfx = get_node("FootstepSFX")
 
+var death_coordiantes : Transform
 
 func _ready():
 	# capture mouse and lock it to the window
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
+	var deathCheck = get_tree().get_root().find_node("DeathPlane", true, false)
+	if deathCheck != null:
+		deathCheck.connect("playerDeath", self, "_on_playerDeath")
+	death_coordiantes = self.transform # where to respawn after death, usually where we begin each stage since there are no checkpoints (yet)
+
+func _on_playerDeath():
+	self.transform = death_coordiantes # should move back to initial starting point
+
+func delta_test(_delta):
+	print(_delta)
+
 func _process(_delta):
 	#runs every frame
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -56,7 +70,7 @@ func handle_movement(delta):
 	var inputMoveVector = Vector2()
 	var cam_global_position = camera.get_global_transform().basis
 	var is_moving = false
-
+	#footstep_sfx.playing = false
 	if Input.is_action_pressed("hold_run"):
 		speed = run_speed
 	else:
@@ -90,6 +104,11 @@ func handle_movement(delta):
 			anim.play("Run")
 			if speed == run_speed:
 				dust.visible = true
+	if is_moving == true and is_on_floor() == true:
+		if footstep_sfx.playing == false:
+			footstep_sfx.play(0.03)
+	else:
+		footstep_sfx.playing = false
 	if !is_on_floor():
 		dust.visible = false
 	if Input.is_action_just_pressed("talk"):

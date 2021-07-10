@@ -5,6 +5,7 @@ var npc_name = "Debug Sign"
 var dialogScene = preload("res://dialog/Dialog.tscn")
 
 func _ready():
+	print("world ready")
 	connect("body_entered", self, "_on_NPC_body_entered")
 	connect("body_exited", self, "_on_NPC_body_exited")
 

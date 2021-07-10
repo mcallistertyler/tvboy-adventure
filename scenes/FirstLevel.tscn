@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://shaders/PS1-shaders-for-godot/psx.shader" type="Shader" id=1]
 [ext_resource path="res://textures/grass2.png" type="Texture" id=2]
@@ -8,6 +8,10 @@
 [ext_resource path="res://assets/props/tree_improved.tscn" type="PackedScene" id=6]
 [ext_resource path="res://models/items/TVMag.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/stage/DeathPlane.tscn" type="PackedScene" id=9]
+[ext_resource path="res://music/Anonymous420 - Bitcoin Day.mp3" type="AudioStream" id=10]
+[ext_resource path="res://assets/props/fence.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/FirstLevel.gd" type="Script" id=12]
 
 [sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 5 )
@@ -41,7 +45,14 @@ extents = Vector3( 0.0468315, 1, 0.0517595 )
 [sub_resource type="BoxShape" id=6]
 extents = Vector3( 19.2893, 1, 19.7591 )
 
+[sub_resource type="PlaneMesh" id=7]
+flip_faces = true
+size = Vector2( 40, 40 )
+subdivide_width = 25
+subdivide_depth = 25
+
 [node name="Spatial" type="Spatial"]
+script = ExtResource( 12 )
 
 [node name="HUD" parent="." instance=ExtResource( 8 )]
 
@@ -67,41 +78,198 @@ space_override = 1
 [node name="CollisionShape" type="CollisionShape" parent="Floor/StaticBody/Area"]
 shape = SubResource( 6 )
 
+[node name="Floor2" type="MeshInstance" parent="."]
+transform = Transform( 5.13214, 0, 0, 0, 1, 0, 0, 0, 6.37977, 1.71399, -2.61474, 3.23276 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 4 )
+
+[node name="StaticBody" type="StaticBody" parent="Floor2"]
+transform = Transform( 431.031, 0, 0, 0, 1, 0, 0, 0, 391.273, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor2/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.993, 0 )
+shape = SubResource( 5 )
+
+[node name="Area" type="Area" parent="Floor2/StaticBody"]
+transform = Transform( 0.00232002, 0, 0, 0, 1, 0, 0, 0, 0.00255576, 0, 0, 0 )
+space_override = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor2/StaticBody/Area"]
+shape = SubResource( 6 )
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3403, 0.788118, -13.6658 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.61976, 3.19837, -108.6 )
 
-[node name="Platform1" parent="." instance=ExtResource( 4 )]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 5, 11.5946, 0.31799, 10.6236 )
+[node name="Platform5" parent="." instance=ExtResource( 4 )]
+transform = Transform( 8.27861, 0, 0, 0, 0.341076, 0, 0, 0, 17.7935, -3.21932, 29.6406, 12.5115 )
 time = 2.5
-direction = Vector3( 0, 0, -1 )
+direction = Vector3( 0, 0, 0 )
 speed = 6.0
 delayTime = 0.5
 
-[node name="Platform2" parent="." instance=ExtResource( 4 )]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 5, 27.7791, 0.31799, 10.6236 )
+[node name="Platform6" parent="." instance=ExtResource( 4 )]
+transform = Transform( 8.27861, 0, 0, 0, 0.341076, 0, 0, 0, 17.7935, 12.6348, 29.6406, 12.5115 )
+time = 2.5
+direction = Vector3( 0, 0, 0 )
 speed = 6.0
 delayTime = 0.5
+
+[node name="Platform7" parent="." instance=ExtResource( 4 )]
+transform = Transform( 8.27861, 0, 0, 0, 0.341076, 0, 0, 0, 17.7935, 28.9934, 29.6406, 12.5115 )
+time = 2.5
+direction = Vector3( 0, 0, 0 )
+speed = 6.0
+delayTime = 0.5
+
+[node name="Platform8" parent="." instance=ExtResource( 4 )]
+transform = Transform( 8.27861, 0, 0, 0, 1.01259, 0, 0, 0, 17.7935, 28.9934, 30.7278, 12.5115 )
+time = 2.5
+direction = Vector3( 0, 0, 0 )
+speed = 6.0
+delayTime = 0.5
+
+[node name="Platform9" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, 52.1031, 30.7278, 12.5115 )
+time = 2.5
+direction = Vector3( 0, 0, 0 )
+speed = 6.0
+delayTime = 0.5
+
+[node name="Platform10" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, 67.4707, 30.7278, 12.5115 )
+time = 2.5
+direction = Vector3( 0, 0, 0 )
+speed = 6.0
+delayTime = 0.5
+
+[node name="Platform11" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, 82.475, 30.7278, 12.5115 )
+time = 2.5
+direction = Vector3( 0, 0, 0 )
+speed = 6.0
+delayTime = 0.5
+
+[node name="Platform12" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, 100.225, 30.7278, 12.5115 )
+time = 2.5
+direction = Vector3( 0, 0, 0 )
+speed = 6.0
+delayTime = 0.5
+
+[node name="Platform13" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, 119.492, 30.7278, 12.5115 )
+time = 2.5
+direction = Vector3( 0, 0, 0 )
+speed = 6.0
+delayTime = 0.5
+
+[node name="Platform14" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, 137.823, 30.7278, 12.5115 )
+time = 2.5
+speed = 6.0
+delayTime = 0.5
+
+[node name="Platform18" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, -111.509, -2.6966, 12.5115 )
+time = 2.5
+direction = Vector3( -1, 0, 0 )
+speed = 6.5
+delayTime = 0.5
+
+[node name="Platform19" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, -148.156, -2.6966, 12.5115 )
+time = 2.5
+direction = Vector3( 0, 0, 0 )
+speed = 6.5
+delayTime = 0.5
+
+[node name="Platform20" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, -162.101, -2.6966, 12.5115 )
+time = 5.5
+direction = Vector3( 0, 1, 0 )
+speed = 8.5
+delayTime = 0.25
+
+[node name="Platform21" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.61206, 0, 0, 0, 1.01259, 0, 0, 0, 7.40035, -138.921, 43.5385, 12.5115 )
+time = 5.5
+direction = Vector3( 0, 0, 0 )
+speed = 8.5
+delayTime = 0.25
 
 [node name="Platform4" parent="." instance=ExtResource( 4 )]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 5, 42.3031, 0.31799, 10.6236 )
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 5, 112.189, 0.31799, -104.631 )
+time = 2.5
+direction = Vector3( 0, -1, 0 )
+speed = 6.0
+delayTime = 2.0
+
+[node name="Platform15" parent="." instance=ExtResource( 4 )]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 5, 104.454, -15.5878, -104.631 )
+direction = Vector3( -1, 0, 0 )
+speed = 6.0
+delayTime = 2.5
+
+[node name="Platform22" parent="." instance=ExtResource( 4 )]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 5, -34.7227, -15.5878, -104.631 )
+time = 10.0
+direction = Vector3( -1, 0, 0 )
+speed = 12.0
+delayTime = 2.5
+
+[node name="Platform23" parent="." instance=ExtResource( 4 )]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 5, -103.309, -1.88487, -104.631 )
+direction = Vector3( 0, -1, 0 )
+speed = 5.0
+delayTime = 2.0
+
+[node name="Platform16" parent="." instance=ExtResource( 4 )]
+transform = Transform( 21.6099, 0, 0, 0, 1, 0, 0, 0, 5, 43.6779, -15.5878, -104.631 )
+direction = Vector3( 0, 0, 0 )
+speed = 6.0
+delayTime = 0.5
+
+[node name="Platform17" parent="." instance=ExtResource( 4 )]
+transform = Transform( 21.6099, 0, 0, 0, 1, 0, 0, 0, 22.6632, -4.34438, -15.5878, -88.1716 )
 direction = Vector3( 0, 0, 0 )
 speed = 6.0
 delayTime = 0.5
 
 [node name="Platform3" parent="." instance=ExtResource( 4 )]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 5, -18.205, 0.31799, 10.6236 )
+transform = Transform( 7.7945, 0, 0, 0, 0.314305, 0, 0, 0, 10.9194, -20.8587, 0.743861, 10.8197 )
 direction = Vector3( 0, 1, 0 )
 speed = 6.0
-delayTime = 0.5
+delayTime = 1.0
 
 [node name="tree" parent="." instance=ExtResource( 6 )]
 transform = Transform( 0.932261, 0, 0.361787, 0, 1, 0, -0.361787, 0, 0.932261, 0, -2.63791, 45.3 )
 
+[node name="tree10" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.229235, 0, 0.973371, 0, 1, 0, -0.973371, 0, 0.229235, -51.6631, -2.63791, 91.0924 )
+
 [node name="tree2" parent="." instance=ExtResource( 6 )]
 transform = Transform( 0.932803, 0, -0.360388, 0, 1, 0, 0.360388, 0, 0.932803, 13.858, -2.63791, 61.4197 )
 
+[node name="tree11" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.932803, 0, -0.360388, 0, 1, 0, 0.360388, 0, 0.932803, 52.5802, -2.63791, 82.6058 )
+
 [node name="tree3" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.560963, -2.63791, 0 )
+
+[node name="tree6" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -69.6845, -2.63791, -44.7975 )
+
+[node name="tree8" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -69.6845, -2.63791, -23.5829 )
+
+[node name="tree7" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33.1151, -2.63791, -44.7975 )
+
+[node name="tree9" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 94.2476, -2.63791, -94.9666 )
+
+[node name="tree12" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 93.2895, -2.63791, -117.958 )
 
 [node name="tree4" parent="." instance=ExtResource( 6 )]
 transform = Transform( -0.505522, 0, 0.862814, 0, 1, 0, -0.862814, 0, -0.505522, 42.2897, -2.63791, 24.9489 )
@@ -112,34 +280,362 @@ transform = Transform( 0.443415, 0, -0.896316, 0, 1, 0, 0.896316, 0, 0.443415, 4
 [node name="Zine" parent="." groups=[
 "Zines",
 ] instance=ExtResource( 7 )]
-transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 13.083, 3.21132, 17.4173 )
-
-[node name="Zine2" parent="." groups=[
-"Zines",
-] instance=ExtResource( 7 )]
-transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 19.5166, 3.21132, 17.4173 )
-
-[node name="Zine3" parent="." groups=[
-"Zines",
-] instance=ExtResource( 7 )]
-transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 34.5926, 7.67383, 4.17298 )
+transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 13.083, 0.981533, 9.76609 )
 
 [node name="Zine4" parent="." groups=[
 "Zines",
 ] instance=ExtResource( 7 )]
-transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 0.909731, 3.21132, 17.4173 )
+transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, -107.291, 43.4063, 17.4173 )
 
 [node name="Zine5" parent="." groups=[
 "Zines",
 ] instance=ExtResource( 7 )]
-transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 19.5166, 3.21132, 41.0896 )
+transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, -61.7387, 3.21132, 41.0896 )
 
 [node name="Zine6" parent="." groups=[
 "Zines",
 ] instance=ExtResource( 7 )]
-transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 19.5166, 3.21132, -5.09991 )
+transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, -13.9447, -10.928, -104.015 )
 
 [node name="Zine7" parent="." groups=[
 "Zines",
 ] instance=ExtResource( 7 )]
-transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 29.5826, 3.21132, 17.4173 )
+transform = Transform( -0.999999, 0, -0.000296831, 0, 1, 0, 0.00148347, 0, -0.200091, 157.501, 35.4975, 12.084 )
+
+[node name="DeathPlane" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -58.6116, 0 )
+
+[node name="cerca" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 103.18, -2.27617, 0 )
+
+[node name="cerca2" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.05425 )
+
+[node name="cerca3" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.1297 )
+
+[node name="cerca4" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15.3082 )
+
+[node name="cerca5" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.4495 )
+
+[node name="cerca6" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -25.5038 )
+
+[node name="cerca7" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30.577 )
+
+[node name="cerca8" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -35.57 )
+
+[node name="cerca9" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40.6102 )
+
+[node name="cerca10" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45.5752 )
+
+[node name="cerca11" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50.4253 )
+
+[node name="cerca12" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -55.3431 )
+
+[node name="cerca13" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -60.1967 )
+
+[node name="cerca79" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 65.4765 )
+
+[node name="cerca80" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 60.4222 )
+
+[node name="cerca96" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 55.3468 )
+
+[node name="cerca97" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50.1683 )
+
+[node name="cerca98" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 45.027 )
+
+[node name="cerca99" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 39.9727 )
+
+[node name="cerca100" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 34.8995 )
+
+[node name="cerca101" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 29.9065 )
+
+[node name="cerca102" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.8663 )
+
+[node name="cerca103" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19.9013 )
+
+[node name="cerca104" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15.0511 )
+
+[node name="cerca105" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.1334 )
+
+[node name="cerca106" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.27983 )
+
+[node name="cerca116" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 85.2396 )
+
+[node name="cerca117" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 80.3895 )
+
+[node name="cerca118" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 75.4717 )
+
+[node name="cerca119" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 70.6181 )
+
+[node name="cerca14" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -77.4402 )
+
+[node name="cerca15" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -1.0358, 0, -81.8631 )
+
+[node name="cerca16" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -6.15678, 0, -81.8631 )
+
+[node name="cerca17" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -11.0119, 0, -81.8631 )
+
+[node name="cerca18" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -15.6662, 0, -81.8631 )
+
+[node name="cerca19" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -20.5983, 0, -81.8631 )
+
+[node name="cerca20" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -25.5061, 0, -81.8631 )
+
+[node name="cerca21" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -30.5315, 0, -81.8631 )
+
+[node name="cerca22" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -35.3715, 0, -81.8631 )
+
+[node name="cerca23" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -40.561, 0, -81.8631 )
+
+[node name="cerca24" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -45.4874, 0, -81.8631 )
+
+[node name="cerca25" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -50.1803, 0, -81.8631 )
+
+[node name="cerca26" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -55.2334, 0, -81.8631 )
+
+[node name="cerca27" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -60.3544, 0, -81.8631 )
+
+[node name="cerca28" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -65.2095, 0, -81.8631 )
+
+[node name="cerca29" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -69.8638, 0, -81.8631 )
+
+[node name="cerca30" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -74.7959, 0, -81.8631 )
+
+[node name="cerca31" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -79.7038, 0, -81.8631 )
+
+[node name="cerca32" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -84.7291, 0, -81.8631 )
+
+[node name="cerca33" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -89.5691, 0, -81.8631 )
+
+[node name="cerca34" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -94.7586, 0, -81.8631 )
+
+[node name="cerca35" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -99.685, 0, -81.8631 )
+
+[node name="cerca36" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -104.378, 0, -81.8631 )
+
+[node name="cerca37" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -109.414, 0, -81.8631 )
+
+[node name="cerca38" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -114.535, 0, -81.8631 )
+
+[node name="cerca39" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -119.39, 0, -81.8631 )
+
+[node name="cerca40" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -124.044, 0, -81.8631 )
+
+[node name="cerca41" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -128.976, 0, -81.8631 )
+
+[node name="cerca42" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -1.0358, 0, 86.8363 )
+
+[node name="cerca43" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -6.15678, 0, 86.8363 )
+
+[node name="cerca44" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -11.0119, 0, 86.8363 )
+
+[node name="cerca45" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -15.6662, 0, 86.8363 )
+
+[node name="cerca46" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -20.5983, 0, 86.8363 )
+
+[node name="cerca47" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -25.5061, 0, 86.8363 )
+
+[node name="cerca48" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -30.5315, 0, 86.8363 )
+
+[node name="cerca49" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -35.3715, 0, 86.8363 )
+
+[node name="cerca50" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -40.561, 0, 86.8363 )
+
+[node name="cerca51" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -45.4874, 0, 86.8363 )
+
+[node name="cerca52" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -50.1803, 0, 86.8363 )
+
+[node name="cerca53" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -55.2334, 0, 86.8363 )
+
+[node name="cerca54" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -60.3544, 0, 86.8363 )
+
+[node name="cerca55" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -65.2095, 0, 86.8363 )
+
+[node name="cerca56" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -69.8638, 0, 86.8363 )
+
+[node name="cerca57" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -74.7959, 0, 86.8363 )
+
+[node name="cerca58" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -79.7038, 0, 86.8363 )
+
+[node name="cerca59" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -84.7291, 0, 86.8363 )
+
+[node name="cerca60" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -89.5691, 0, 86.8363 )
+
+[node name="cerca61" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -94.7586, 0, 86.8363 )
+
+[node name="cerca62" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -99.685, 0, 86.8363 )
+
+[node name="cerca63" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -104.378, 0, 86.8363 )
+
+[node name="cerca64" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -109.414, 0, 86.8363 )
+
+[node name="cerca65" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -114.535, 0, 86.8363 )
+
+[node name="cerca66" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -119.39, 0, 86.8363 )
+
+[node name="cerca67" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -124.044, 0, 86.8363 )
+
+[node name="cerca68" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( 0.00158811, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00158811, -128.976, 0, 86.8363 )
+
+[node name="cerca69" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.289, 0, -44.5804 )
+
+[node name="cerca70" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.279, 0, -39.4594 )
+
+[node name="cerca71" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.27, 0, -34.6043 )
+
+[node name="cerca72" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.261, 0, -29.95 )
+
+[node name="cerca73" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.252, 0, -25.018 )
+
+[node name="cerca74" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.243, 0, -20.1101 )
+
+[node name="cerca75" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.233, 0, -15.0848 )
+
+[node name="cerca76" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.224, 0, -10.2448 )
+
+[node name="cerca77" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.214, 0, -5.05528 )
+
+[node name="cerca78" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.205, 0, -0.12891 )
+
+[node name="cerca81" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.176, 0, 14.7381 )
+
+[node name="cerca82" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.167, 0, 19.5932 )
+
+[node name="cerca83" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.158, 0, 24.2475 )
+
+[node name="cerca84" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.149, 0, 29.1795 )
+
+[node name="cerca85" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.139, 0, 34.0874 )
+
+[node name="cerca86" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.13, 0, 39.1127 )
+
+[node name="cerca87" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.121, 0, 43.9527 )
+
+[node name="cerca88" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.111, 0, 49.1422 )
+
+[node name="cerca89" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.101, 0, 54.0686 )
+
+[node name="cerca90" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.093, 0, 58.7615 )
+
+[node name="cerca91" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.083, 0, 63.7973 )
+
+[node name="cerca92" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.073, 0, 68.9182 )
+
+[node name="cerca93" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.064, 0, 73.7733 )
+
+[node name="cerca94" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.055, 0, 78.4277 )
+
+[node name="cerca95" parent="cerca" instance=ExtResource( 11 )]
+transform = Transform( -1, 0, -0.000314315, 0, 1, 0, 0.000314315, 0, -1, -133.046, 0, 83.3597 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -25.0
+autoplay = true

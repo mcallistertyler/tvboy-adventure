@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Anonymous420 - Bitcoin Day.mp3-d25e7111a699878cf5f4ac8f59c1fcd7.mp3str"
+
+[deps]
+
+source_file="res://music/Anonymous420 - Bitcoin Day.mp3"
+dest_files=[ "res://.import/Anonymous420 - Bitcoin Day.mp3-d25e7111a699878cf5f4ac8f59c1fcd7.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

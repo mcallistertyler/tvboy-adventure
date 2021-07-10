@@ -44,5 +44,4 @@ func _on_Area_body_entered(body):
 
 
 func _on_Zine_zineCollected():
-	print("zine collected")
 	pass # Replace with function body.
