@@ -8,7 +8,7 @@ pipeline {
 				sh "unzip Godot_v3.3.2-stable_linux_headless.64.zip"
 				sh "mv Godot_v3.3.2-stable_linux_headless.64.zip godot"
 				sh "chmod +x godot"
-				sh "file godot"
+				sh "ls"
 				sh '''echo got somewhere '''
 				sh '''if [ -d "builds" ]; then
 					rm -rf builds
