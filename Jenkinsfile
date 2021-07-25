@@ -7,6 +7,7 @@ pipeline {
 				sh "rm *.tpz*"
 				sh "rm *.zip*"
 				sh "rm * git_api.gdn"
+				sh "rm -rf .import/*.gltf"
 				sh "rm -rf addons"
 				sh "wget -q https://downloads.tuxfamily.org/godotengine/3.3.2/Godot_v3.3.2-stable_linux_headless.64.zip"
 				sh "unzip -o Godot_v3.3.2-stable_linux_headless.64.zip"
