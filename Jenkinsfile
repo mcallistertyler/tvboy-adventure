@@ -4,9 +4,11 @@ pipeline {
 	stages {
 		stage('Build game') {
 			steps {
+				sh "rm *.tpz*"
+				sh "rm *.zip*"
 				sh "wget -q https://downloads.tuxfamily.org/godotengine/3.3.2/Godot_v3.3.2-stable_linux_headless.64.zip"
 				sh "unzip -o Godot_v3.3.2-stable_linux_headless.64.zip"
-				sh "mv Godot_v3.3.2-stable_linux_headless.64.zip godot"
+				sh "mv Godot_v3.3.2-stable_linux_headless.64 godot"
 				sh "chmod +x godot"
 				sh '''if [ -d "builds" ]; then
 					rm -rf builds
@@ -20,7 +22,6 @@ pipeline {
 				sh "rm -rf ~/.local/share/godot/templates/3.3.2.stable"
 				sh "mv ~/.local/share/godot/templates/templates ~/.local/share/godot/templates/3.3.2.stable"
 				sh "set +e"
-				sh "ls"
 				sh "uname -m"
 				sh '''./godot --export win64 project.godot builds/linux '''
 				sh "ls builds/linux"
