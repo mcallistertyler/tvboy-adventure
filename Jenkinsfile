@@ -21,6 +21,7 @@ pipeline {
 				sh "mv ~/.local/share/godot/templates/templates ~/.local/share/godot/templates/3.3.2.stable"
 				sh "set +e"
 				sh "ls"
+				sh "uname -m"
 				sh '''./godot --export win64 project.godot builds/linux '''
 				sh "ls builds/linux"
 			}
