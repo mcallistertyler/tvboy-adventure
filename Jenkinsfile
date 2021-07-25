@@ -8,8 +8,6 @@ pipeline {
 				sh "unzip -o Godot_v3.3.2-stable_linux_headless.64.zip"
 				sh "mv Godot_v3.3.2-stable_linux_headless.64.zip godot"
 				sh "chmod +x godot"
-				sh "ls"
-				sh '''echo got somewhere '''
 				sh '''if [ -d "builds" ]; then
 					rm -rf builds
 				fi'''
@@ -21,6 +19,7 @@ pipeline {
 				sh "unzip -o Godot_v3.3.2-stable_export_templates.tpz -d ~/.local/share/godot/templates" 
 				sh "mv ~/.local/share/godot/templates/templates ~/.local/share/godot/templates/3.3.2.stable"
 				sh "set +e"
+				sh "ls"
 				sh '''./godot --export "Linux/X11" project.godot builds/linux '''
 				sh "ls builds/linux"
 			}
